@@ -1,0 +1,54 @@
+# Class model
+# imagen = models.ImageField(upload_to='imagenes/', null=True, black=True)
+
+
+# consultar una imagen:
+# <table>
+# <img src="{{ area.imagen.url }}" height="100" />
+
+# mi nombre se llama Humberto
+
+
+# python -m venv myentorno
+
+# ./myentorno/Scripts/activate
+
+# python -m .\requirements.txt
+
+# python -m .\requirements.txt
+
+# python manage.py makemigrations
+
+# python manage.py migrate
+
+# python manage.py runserver
+
+
+# #Para actualizar cambios GitLab
+# cd biofrost (donde está el código xd)
+# git checkout nombrebranch
+# git status
+# git add notes
+# git commit -m "upgradenotes"
+# git push
+
+# #Agregar proyecto a repositorio Github
+
+# git init
+# git add .
+# git commit -m "first commit"
+# git remote add origin https://github.com/Singedpls/mvnrepository.git
+
+# #Si no funcionó, hacer esto en CMD:
+# git init
+# git status
+# git remote show
+# git push -u origin master
+
+# #Commit changes
+# git status
+# git add --all
+# git commit -m "name of the change"
+# git remote show
+# git push -u origin
+# git push -u origin master

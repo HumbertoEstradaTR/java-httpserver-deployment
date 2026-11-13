@@ -1,0 +1,43 @@
+stages:
+    - prebuild
+    - build
+    #- test
+    #- package
+    - deploy
+
+prebuild:
+    stage: prebuild
+    image: maven:3.3.9-jdk-8
+    variables:
+        IMAGE_TAG: 2.0
+        #SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
+    script:
+        - mvn clean install
+        - mvn compile
+        - echo "Doing QA stuff"
+        - mvn clean test
+        #- mvn verify sonar:sonar -Dsonar.qualitygate.wait=true
+
+build:
+    stage: build
+    image: docker
+    services:
+        - docker:dind
+    script:
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
+    - docker build -t $CI_REGISTRY_IMAGE .
+    - docker push $CI_REGISTRY_IMAGE
+    - docker -v
+    - echo $CI_REGISTRY_IMAGE:$IMAGE_TAG
+    - docker run -d $CI_REGISTRY_IMAGE
+
+deploy:
+    stage: deploy
+    image: docker
+    services:
+    - docker:dind
+    script:
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
+    - echo $CI_REGISTRY_IMAGE
+    - docker pull $CI_REGISTRY_IMAGE
+    - docker run $CI_REGISTRY_IMAGE
